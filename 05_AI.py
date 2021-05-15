@@ -64,16 +64,27 @@ model.save('model/model.h5')
 import warnings
 warnings.filterwarnings('ignore')
 
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 
 model = load_model('model/model.h5')
 model.summary()
 
 from keras.datasets import mnist
-import matplolib.pyplot as plt
+import matplotlib.pyplot as plt
 
 (train_images, train_labels), (test_images, test_labels) = mnist.load_data()
 
 pick_img = test_images[25]
 plt.imshow(pick_img, cmap=plt.cm.binary)
 plt.show()
+
+
+######################
+
+import warnings
+warnings.filterwarnings('ignore')
+
+from keras.datasets import mnist
+from keras.utils import to_categorical
+
+(train_images, train_labels), (test_images, test_labels) = mnist.load_data()
