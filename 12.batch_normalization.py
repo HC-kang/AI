@@ -21,8 +21,8 @@ test_images = test_images.astype('float32') / 255
 train_labels = to_categorical(train_labels)
 test_labels = to_categorical(test_labels)
 
-from keras.models import Sequential
-from keras.layers import Dense
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
 
 from keras import regularizers
 reg = regularizers.l2(0.01)
@@ -33,7 +33,7 @@ from keras.layers.core import Activation
 model = Sequential()
 
 model.add(Dense(128, input_shape = (784, )))
-model.add(BatchNormalization)
+model.add(BatchNormalization())
 model.add(Activation('relu'))
 
 model.add(Dense(64, input_shape = (512, )))
@@ -42,5 +42,18 @@ model.add(Activation('relu'))
 
 model.add(Dense(10, activation = 'softmax'))
 
-from keras.optimizers import Adam
-optimizer = Adam
+from tensorflow.keras.optimizers import Adam
+optimizer = Adam(lr = 0.001)
+
+model.compile(optimizer = optimizer,
+              loss = 'categorical_crossentropy',
+              metrics = 'accuracy')
+              
+model.summary()
+
+model.fit(train_images, train_labels, epochs = 5, batch_size = 64)
+
+test_loss, test_acc = model.evaluate(test_images, test_labels)
+
+print( 'test acc: ', test_acc)
+
